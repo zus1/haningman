@@ -2,15 +2,15 @@
 include_once $_SERVER["DOCUMENT_ROOT"] . "/classes/factory.php";
 $parser = Factory::getObject(Factory::TYPE_HTML_PARSER);
 $parser->includeHeader(); ?>
-<div id="alert" style="display: none; z-index: -1; margin-top: 0">
-    <div id="notification"></div>
-</div>
-
-</div>
-<div class="title">
-    <h2>Start new Hanging man game</h2>
-</div>
 <div class="container">
+    <div style="height: 50px;">
+        <div id="alert" class="notification" style="display: none">
+            <div id="notification"></div>
+        </div>
+    </div>
+    <div class="title-div">
+        <h2>Start new Hanging man game</h2>
+    </div>
     <div class="coos-lang">
         Choose language
     </div>
@@ -46,32 +46,41 @@ $parser->includeHeader(); ?>
 
     start.addEventListener("click", () => {
         initGame();
-
     });
 
     function initGame() {
         let xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                //document.getElementById("demo").innerHTML = this.responseText;
-                console.log(JSON.parse(this.responseText));
+                handlePostInit(JSON.parse(this.responseText));
             }
         };
 
-        const host = window.location.hostname;
-        const protocol = window.location.protocol;
+        const http = getHttpParams();
         let checked = "";
         languages.forEach(language => {
            if(language.checked) {
                checked = language.value;
            }
         });
-        xhttp.open("GET", protocol + "//" + host + "/landing/route.php?source=start&language=" + checked, true);
+        xhttp.open("GET", http.protocol + "//" + http.host + "/landing/route.php?source=start&language=" + checked, true);
         xhttp.send();
     }
 
-    function handlePostInit() {
+    function handlePostInit(ajaxResponse) {
+        if(ajaxResponse.error === 1) {
+            addNotification("error", ajaxResponse.message);
+        } else {
+            const http = getHttpParams();
+            window.location.href = http.protocol + "//" + http.host + "/views/game.php";
+        }
+    }
 
+    function getHttpParams() {
+        return {
+            "host": window.location.hostname,
+            "protocol": window.location.protocol
+        }
     }
 
     function addNotification(type, text) {

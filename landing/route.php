@@ -11,4 +11,12 @@ switch ($_GET["source"]) {
             echo json_encode(array("error" => 1, "message" => $e->getMessage()));
         }
         break;
+    case "init" :
+        try {
+            $currentValues = $controller->getCurrentGameValues();
+            echo json_encode(array("error" => 0, 'data' => $currentValues));
+        } catch(Exception $e) {
+            echo json_encode(array("error" => 1, "message" => $e->getMessage()));
+        }
+        break;
 }

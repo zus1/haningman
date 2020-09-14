@@ -8,7 +8,7 @@ class FileHandler
 
     public function __construct() {
         $this->resourcesPath = $_SERVER["DOCUMENT_ROOT"] . "/resources";
-        $this->resourcesUrl = Handler::baseUrl() . "/resources";
+        $this->resourcesUrl = Handler::baseUrl() . "resources";
     }
 
     public function getNewGameFile() {
@@ -39,14 +39,23 @@ class FileHandler
         $imgDirUrl = $this->resourcesUrl . "/images";
 
         return array(
-            $imgDirUrl . "0.jpg",
-            $imgDirUrl . "1.jpg",
-            $imgDirUrl . "2.jpg",
-            $imgDirUrl . "3.jpg",
-            $imgDirUrl . "4.jpg",
-            $imgDirUrl . "5.jpg",
-            $imgDirUrl . "6.jpg",
-            $imgDirUrl . "7.jpg",
+            $imgDirUrl . "/0.jpg",
+            $imgDirUrl . "/1.jpg",
+            $imgDirUrl . "/2.jpg",
+            $imgDirUrl . "/3.jpg",
+            $imgDirUrl . "/4.jpg",
+            $imgDirUrl . "/5.jpg",
+            $imgDirUrl . "/6.jpg",
+            $imgDirUrl . "/7.jpg",
         )[$failedAttempts];
+    }
+
+    public function getCurrentGameValues(string $filename) {
+        $fullPath = $this->resourcesPath . "/game/" . $filename;
+        if(!file_exists($fullPath)) {
+            throw new Exception("No game file", 404);
+        }
+
+        return file_get_contents($fullPath);
     }
 }
