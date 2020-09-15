@@ -9,21 +9,21 @@ class HtmlParser
     }
 
     public function includeHeader() {
-        $headerPath = $this->partsRoot . "/header.php";
+        $headerPath = $this->partsRoot . "/header.html";
         $contents = file_get_contents($headerPath);
 
         echo $this->replaceHolders($contents);
     }
 
     public function includeFooter() {
-        $footerPath = $this->partsRoot . "/footer.php";
+        $footerPath = $this->partsRoot . "/footer.html";
         $contents = file_get_contents($footerPath);
 
         echo $this->replaceHolders($contents);
     }
 
     public function includeView(string $viewName) {
-        $viewPath = $this->partsRoot . "/" . $viewName . ".php";
+        $viewPath = $this->partsRoot . "/" . $viewName . ".html";
         $contents = file_get_contents($viewPath);
 
         echo $this->replaceHolders($contents);
