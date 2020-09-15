@@ -27,6 +27,18 @@ class FileHandler
         throw new Exception("Could not init game", 500);
     }
 
+    public function updateGameFile(string $filename, string $contents) {
+        $fullPath = $this->resourcesPath . "/game/" . $filename;
+        if(!file_put_contents($fullPath, $contents)) {
+            throw new Exception("Could not process latter");
+        }
+    }
+
+    public function deleteGameFile(string $filename) {
+        $fullPath = $this->resourcesPath . "/game/" . $filename;
+        unlink($fullPath);
+    }
+
     public function getGameWords(string $language) {
         $fullPath = $this->resourcesPath . "/words/" . $language . ".csv";
         if(!file_exists($fullPath)) {

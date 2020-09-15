@@ -34,7 +34,9 @@ class HtmlParser
             '{bootstrap_css}' => Handler::baseUrl() . "css/bootstrap.css",
             '{bootstrap_js}' => Handler::baseUrl() . "js/bootstrap.min.js",
             "{main_css}" => Handler::baseUrl() . "css/main.css",
-            "{main_js}" => Handler::baseUrl() . "css/main.js"
+            "{start_js}" => Handler::baseUrl() . "js/start.js",
+            "{game_js}" => Handler::baseUrl() . "js/game.js",
+            "{utilities_js}" => Handler::baseUrl() . "js/utilities.js"
         );
         array_walk($holdersMapping, function ($value, $key) use(&$fileContents) {
            if(strpos($fileContents, $key)) {
