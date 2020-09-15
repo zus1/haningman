@@ -36,7 +36,8 @@ class HtmlParser
             "{main_css}" => Handler::baseUrl() . "css/main.css",
             "{start_js}" => Handler::baseUrl() . "js/start.js",
             "{game_js}" => Handler::baseUrl() . "js/game.js",
-            "{utilities_js}" => Handler::baseUrl() . "js/utilities.js"
+            "{utilities_js}" => Handler::baseUrl() . "js/utilities.js",
+            "{rules}" => $this->replaceHolderFromFile("rules"),
         );
         array_walk($holdersMapping, function ($value, $key) use(&$fileContents) {
            if(strpos($fileContents, $key)) {
@@ -45,5 +46,10 @@ class HtmlParser
         });
 
         return $fileContents;
+    }
+
+    private function replaceHolderFromFile(string $filename) {
+        $replacementPath = $this->partsRoot . "/" . $filename . ".html";
+        return file_get_contents($replacementPath);
     }
 }
